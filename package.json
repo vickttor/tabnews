@@ -4,7 +4,9 @@
   "description": "Tabnews.com.br clone by advancing in the curso.dev course.",
   "main": "index.js",
   "scripts": {
-    "dev": "next dev"
+    "dev": "next dev",
+    "start": "next start",
+    "build": "next build"
   },
   "author": "Victor H. Silva",
   "license": "MIT",
