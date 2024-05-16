@@ -1,7 +1,9 @@
 # tabnews
+
 A clone of the https://tabnews.com.br website built during the course https://curso.dev from Filipe Deschamps.
 
 ## Status
+
 - In development 🚧
 
 ## Tech Stack
