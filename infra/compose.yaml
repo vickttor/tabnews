@@ -1,0 +1,9 @@
+services:
+  database:
+    image: postgres:16.0-alpine3.18
+    restart: always
+    container_name: "tabnews-database"
+    environment:
+      - POSTGRES_PASSWORD=password
+    ports:
+      - "5432:5432"
