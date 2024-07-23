@@ -4,6 +4,6 @@ services:
     restart: always
     container_name: "tabnews-database"
     env_file:
-      - ../.env
+      - ../.env.development
     ports:
       - "5432:5432"
