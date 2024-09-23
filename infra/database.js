@@ -7,7 +7,7 @@ async function query(queryObject) {
     user: process.env.POSTGRES_USER,
     database: process.env.POSTGRES_DB,
     password: process.env.POSTGRES_PASSWORD,
-    ssl: process.env.NODE_ENV === "development" ? false : true,
+    ssl: getSSLConfig(),
   });
 
   try {
@@ -25,3 +25,14 @@ async function query(queryObject) {
 export default {
   query,
 };
+
+function getSSLConfig() {
+  if (process.env.CA) {
+    return {
+      rejectUnauthorized: true,
+      ca: process.env.CA,
+    };
+  }
+  // The actual Subapase configuration isn't requiring SSL in production.
+  return process.env.NODE_ENV === "development" ? false : true;
+}
