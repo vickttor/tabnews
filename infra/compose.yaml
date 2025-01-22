@@ -2,7 +2,7 @@ services:
   database:
     image: postgres:16.0-alpine3.18
     restart: always
-    container_name: "tabnews-database"
+    container_name: "postgres-dev"
     env_file:
       - ../.env.development
     ports:
