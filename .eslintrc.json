@@ -1,6 +1,10 @@
 {
-  "extends": ["next", "eslint-config-next", "eslint-config-prettier"],
-  "plugins": ["eslint-plugin-jest"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:jest/recommended",
+    "next/core-web-vitals",
+    "prettier"
+  ],
   "rules": {
     "@next/next/no-sync-scripts": "off"
   }
