@@ -14,3 +14,7 @@ A clone of the https://tabnews.com.br website built during the course https://cu
 - Docker
 - Docker Compose
 - PostgreSQL
+
+---
+
+Coming back after 216 days
