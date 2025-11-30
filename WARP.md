@@ -11,6 +11,7 @@ TabNews is a clone of tabnews.com.br, built as part of the curso.dev course by F
 ## Development Commands
 
 ### Setup and Running
+
 ```bash
 npm run dev                  # Start dev server (automatically starts services, waits for DB, runs migrations)
 npm run services:up          # Start Docker containers (PostgreSQL)
@@ -20,6 +21,7 @@ npm run services:wait:database  # Wait for PostgreSQL to be ready
 ```
 
 ### Testing
+
 ```bash
 npm test                     # Run all tests (starts services, runs Jest with Next.js server)
 npm run test:watch          # Run tests in watch mode (requires services to be running)
@@ -28,6 +30,7 @@ npm run test:watch          # Run tests in watch mode (requires services to be r
 **Important**: Tests run with `--runInBand` (serially) to avoid database conflicts. Each test suite uses the orchestrator to wait for services and can clear the database between tests.
 
 ### Database Migrations
+
 ```bash
 npm run migrations:create   # Create a new migration file in infra/migrations/
 npm run migrations:up       # Run pending migrations using .env.development
@@ -36,6 +39,7 @@ npm run migrations:up       # Run pending migrations using .env.development
 Migrations use `node-pg-migrate` and are stored in `infra/migrations/`. The API endpoint `/api/v1/migrations` allows checking (GET) and running (POST) migrations programmatically.
 
 ### Code Quality
+
 ```bash
 npm run lint:prettier:check # Check code formatting
 npm run lint:prettier:fix   # Auto-fix formatting issues
@@ -43,6 +47,7 @@ npm run lint:eslint:check   # Run ESLint on all files
 ```
 
 ### Git Workflow
+
 ```bash
 npm run commit              # Use Commitizen for conventional commits
 ```
@@ -54,23 +59,27 @@ This project uses Husky for git hooks and follows conventional commit standards 
 ### Directory Structure
 
 **`pages/`**: Next.js pages and API routes
+
 - `pages/index.js`: Homepage with simple UI
 - `pages/api/v1/status/`: Health check endpoint with database connection metrics
 - `pages/api/v1/migrations/`: Migration management endpoint (GET for pending, POST to apply)
 
 **`infra/`**: Infrastructure and database code
+
 - `infra/database.js`: PostgreSQL client wrapper with connection pooling and SSL configuration
 - `infra/compose.yaml`: Docker Compose configuration for local PostgreSQL
 - `infra/migrations/`: Database migration files (node-pg-migrate format)
 - `infra/scripts/wait-for-postgres.js`: Script to poll Docker container until PostgreSQL is ready
 
 **`tests/`**: Test suites
+
 - `tests/orchestrator.js`: Test utilities for waiting on services and clearing database
 - `tests/integration/api/v1/`: Integration tests mirroring API structure
 
 ### Database Architecture
 
 The application uses a single `infra/database.js` module that:
+
 - Creates new PostgreSQL clients per query (no persistent connection)
 - Automatically closes connections in finally blocks
 - Configures SSL based on environment (production vs development)
@@ -81,6 +90,7 @@ The application uses a single `infra/database.js` module that:
 ### API Route Pattern
 
 API routes follow a consistent pattern:
+
 1. Import `database` from `infra/database.js`
 2. Execute queries using `database.query()` or manage transactions with `database.getNewClient()`
 3. Return JSON responses with appropriate status codes
@@ -89,6 +99,7 @@ API routes follow a consistent pattern:
 ### Testing Strategy
 
 Integration tests:
+
 - Start the Next.js dev server and PostgreSQL via Docker
 - Use `orchestrator.waitForAllServices()` to retry until services are ready
 - Make HTTP requests to `http://localhost:3000/api/v1/*`
@@ -100,6 +111,7 @@ Test timeout is set to 60 seconds in `jest.config.js` to accommodate service sta
 ### Environment Configuration
 
 **Development**: Uses `.env.development` with local PostgreSQL credentials
+
 - Database runs in Docker container named `postgres-dev` on port 5432
 - Default credentials: local_user/local_password/local_db
 
@@ -108,6 +120,7 @@ Test timeout is set to 60 seconds in `jest.config.js` to accommodate service sta
 ### Migration System
 
 Migrations use `node-pg-migrate`:
+
 - Files in `infra/migrations/` follow naming: `{timestamp}_{description}.js`
 - Each migration exports `up` and `down` functions
 - Migrations are tracked in `pgmigrations` table
